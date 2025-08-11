@@ -2,33 +2,30 @@ class Solution {
 public:
 
 // 1. bruteforce approch T.C.-O(m*(n-m)) S.C.-O(1)
-    // int strStr(string haystack, string needle) {
-    //     int n = haystack.length();
-    //     int m = needle.length();
+    int strStr(string haystack, string needle) {
+        int n = haystack.length();
+        int m = needle.length();
 
-    //     if(n < m) {
-    //         return -1;
-    //     }
+        if(n < m) {
+            return -1;
+        }
 
-    //     int hayIdx = 0, neeIdx = 0;
-    //     int i = 0;
-    //     while(hayIdx < n-m+1){
-    //         i = hayIdx;
-    //         while(neeIdx < m){
-    //             if(haystack[hayIdx] != needle[neeIdx]){
-    //                 hayIdx = i+1;
-    //                 neeIdx = 0;
-    //                 break;
-    //             }
-    //             hayIdx++;
-    //             neeIdx++;
-    //         }
-    //         if(neeIdx != 0){
-    //             return i;
-    //         }
-    //     }
-    //     return -1;
-    // }
+
+        for(int i = 0; i < n-m+1; i++){
+            int hayIdx = i, neeIdx = 0;
+            while(neeIdx < m){
+                if(haystack[hayIdx] != needle[neeIdx]){
+                    break;
+                }
+                hayIdx++;
+                neeIdx++;
+            }
+            if(neeIdx == m){
+                return i;
+            }
+        }
+        return -1;
+    }
 
 // 2. Robin-Corp Algo (hashCode is sum of mapped digit)
 //    T.C.-Worst-O((n-m)*m)
@@ -88,34 +85,34 @@ public:
     // }
 
 
-// 4. two pointer approch 
+// 4. two pointer approch T.C. O(m*(n-m)) S.C. O(1)
    
-    int strStr(string haystack, string needle) {
-        int n = haystack.length();
-        int m = needle.length();
-        int indx = -1;
+    // int strStr(string haystack, string needle) {
+    //     int n = haystack.length();
+    //     int m = needle.length();
+    //     int indx = -1;
 
-        // if source string (haystack) is smaller than target string (needle)
-        if(n < m) return indx;
+    //     // if source string (haystack) is smaller than target string (needle)
+    //     if(n < m) return indx;
         
-        int i = 0, j = 0;
-        while(i < n && j < m) {
-            if(haystack[i] == needle[j]) {
-                i++;
-                j++;
-            }
-            else {
-                i = i - j + 1;
-                j = 0;
-            }
-        }
+    //     int i = 0, j = 0;
+    //     while(i < n && j < m) {
+    //         if(haystack[i] == needle[j]) {
+    //             i++;
+    //             j++;
+    //         }
+    //         else {
+    //             i = i - j + 1;
+    //             j = 0;
+    //         }
+    //     }
 
-        if(j == m) indx = i - m;
+    //     if(j == m) indx = i - m;
 
-        return indx;
+    //     return indx;
 
 
-    }
+    // }
 
 
 
