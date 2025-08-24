@@ -1,6 +1,6 @@
 class Solution {
 public:
-// 1. Sliding window + prefix Sum + Binary Search T.C. - O(k * logn) S.C. O(n)
+// 1. Greedy approch + prefix Sum + Binary Search T.C. - O(k * logn) S.C. O(n)
     int maxTotalFruits(vector<vector<int>>& fruits, int startPos, int k) {
         
         int n = fruits.size();
