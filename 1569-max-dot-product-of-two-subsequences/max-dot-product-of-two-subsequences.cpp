@@ -1,45 +1,29 @@
 class Solution {
 public:
 
-    int n, m;
-    vector<int> a, b;
-    vector<vector<int>> dp;
-    vector<vector<bool>> vis;
-
-    int solve(int i, int j) {
-        if (i == n || j == m)
-            return INT_MIN;
-
-        if (vis[i][j])
-            return dp[i][j];
-
-        vis[i][j] = true;
-
-        int take = a[i] * b[j];
-        int next = solve(i + 1, j + 1);
-        if (next > 0)
-            take += next;
-
-        int skip1 = solve(i + 1, j);
-        int skip2 = solve(i, j + 1);
-
-        return dp[i][j] = max({take, skip1, skip2});
-    }
-
-
-
+   
 
 
 
     int maxDotProduct(vector<int>& nums1, vector<int>& nums2) {
-        a = nums1;
-        b = nums2;
-        n = a.size();
-        m = b.size();
+      int n = nums1.size(), m = nums2.size();
 
-        dp.assign(n, vector<int>(m, 0));
-        vis.assign(n, vector<bool>(m, false));
+        vector<vector<int>> dp(n + 1, vector<int>(m + 1, INT_MIN));
 
-        return solve(0, 0);
+        // Fill table bottom-up
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = m - 1; j >= 0; j--) {
+                int take = nums1[i] * nums2[j];
+                if (dp[i + 1][j + 1] > 0)
+                    take += dp[i + 1][j + 1];
+
+                int skip1 = dp[i + 1][j];
+                int skip2 = dp[i][j + 1];
+
+                dp[i][j] = max({take, skip1, skip2});
+            }
+        }
+
+        return dp[0][0];
     }
 };
