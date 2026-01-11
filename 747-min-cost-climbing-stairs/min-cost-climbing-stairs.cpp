@@ -141,22 +141,41 @@ public:
     // }
 
 // 1.3 Better way to do approch 3
-    int costToClimbing(vector<int>& cost, int n, vector<int>& minCostDp) {
-        if(n <= 0) return 0;
+    // int costToClimbing(vector<int>& cost, int n, vector<int>& minCostDp) {
+    //     if(n <= 0) return 0;
         
-        minCostDp[0] = 0;
-        minCostDp[1] = 0;
+    //     minCostDp[0] = 0;
+    //     minCostDp[1] = 0;
 
-        for(int i = 2; i <= n; i++) {
+    //     for(int i = 2; i <= n; i++) {
             
-            minCostDp[i] = min(minCostDp[i-1] + cost[i-1], minCostDp[i-2] + cost[i-2]);
-        }
+    //         minCostDp[i] = min(minCostDp[i-1] + cost[i-1], minCostDp[i-2] + cost[i-2]);
+    //     }
 
-        return minCostDp[n];
-    }
+    //     return minCostDp[n];
+    // }
+    // int minCostClimbingStairs(vector<int>& cost) {
+    //     int n = cost.size();
+    //     vector<int> minCostDp(n+1, -1);
+    //     return costToClimbing(cost, n, minCostDp);
+    // }
+
+// 1.4 Better way to do approch 4
     int minCostClimbingStairs(vector<int>& cost) {
         int n = cost.size();
-        vector<int> minCostDp(n+1, -1);
-        return costToClimbing(cost, n, minCostDp);
+        
+        if(n <= 0) return 0;
+
+        int prev = 0;
+        int pprev = 0;
+        int curr = 0;
+
+        for(int i = 2; i <= n; i++) {
+            curr = min(prev + cost[i-1], pprev + cost[i-2]);
+            pprev = prev;
+            prev = curr;
+        }
+
+        return curr;
     }
 };
