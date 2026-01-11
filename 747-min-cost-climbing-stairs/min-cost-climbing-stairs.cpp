@@ -118,25 +118,45 @@ public:
 
 // 1.2 Fix the bug in approch 2
 
-    int costToClimbing(vector<int>& cost, int n, vector<int>& lookUpDp) {
-        if(n <= 0) {
-            return 0;
-        }
+    // int costToClimbing(vector<int>& cost, int n, vector<int>& lookUpDp) {
+    //     if(n <= 0) {
+    //         return 0;
+    //     }
         
-        if(lookUpDp[n] != -1) {
-            return lookUpDp[n];
+    //     if(lookUpDp[n] != -1) {
+    //         return lookUpDp[n];
+    //     }
+
+    //     int first = cost[n-1] + costToClimbing(cost, n-1, lookUpDp);
+    //     int second = n > 1 ? cost[n-2] + costToClimbing(cost, n-2, lookUpDp) : costToClimbing(cost, n-2, lookUpDp);
+
+    //     lookUpDp[n] = min(first, second);
+    //     return lookUpDp[n];
+    // }
+
+    // int minCostClimbingStairs(vector<int>& cost) {
+    //     int n = cost.size();
+    //     vector<int> lookUpDp(n+1, -1);
+    //     return costToClimbing(cost, n, lookUpDp);
+    // }
+
+// 1.3 Better way to do approch 3
+    int costToClimbing(vector<int>& cost, int n, vector<int>& minCostDp) {
+        if(n <= 0) return 0;
+        
+        minCostDp[0] = 0;
+        minCostDp[1] = 0;
+
+        for(int i = 2; i <= n; i++) {
+            
+            minCostDp[i] = min(minCostDp[i-1] + cost[i-1], minCostDp[i-2] + cost[i-2]);
         }
 
-        int first = cost[n-1] + costToClimbing(cost, n-1, lookUpDp);
-        int second = n > 1 ? cost[n-2] + costToClimbing(cost, n-2, lookUpDp) : costToClimbing(cost, n-2, lookUpDp);
-
-        lookUpDp[n] = min(first, second);
-        return lookUpDp[n];
+        return minCostDp[n];
     }
-
     int minCostClimbingStairs(vector<int>& cost) {
         int n = cost.size();
-        vector<int> lookUpDp(n+1, -1);
-        return costToClimbing(cost, n, lookUpDp);
+        vector<int> minCostDp(n+1, -1);
+        return costToClimbing(cost, n, minCostDp);
     }
 };
