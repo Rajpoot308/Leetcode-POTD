@@ -42,18 +42,30 @@ public:
     
     int uniquePathCounts(int m, int n, vector<vector<int> >& pathCountsDp) {
 
-        pathCountsDp[0][0] = 1;
-
         for(int i = 0; i <= m; i++) {
-            for(int j = 0; j <= n; j++) {
+            pathCountsDp[i][0] = 1;
+        }
 
-                if(i > 0 && j > 0) pathCountsDp[i][j] = pathCountsDp[i][j-1] + pathCountsDp[i-1][j];
-                
-                if(i == 0 && j > 0) pathCountsDp[i][j] += pathCountsDp[i][j-1];
+        for(int j = 0; j <= n; j++) {
+            pathCountsDp[0][j] = 1;
+        }
 
-                if(i > 0 && j == 0) pathCountsDp[i][j] += pathCountsDp[i-1][j];
+        for(int i = 1; i <= m; i++) {
+            for(int j = 1; j <= n; j++) {
+                pathCountsDp[i][j] = pathCountsDp[i][j-1] + pathCountsDp[i-1][j];
             }
         }
+
+        // for(int i = 0; i <= m; i++) {
+        //     for(int j = 0; j <= n; j++) {
+
+        //         if(i > 0 && j > 0) pathCountsDp[i][j] = pathCountsDp[i][j-1] + pathCountsDp[i-1][j];
+                
+        //         if(i == 0 && j > 0) pathCountsDp[i][j] += pathCountsDp[i][j-1];
+
+        //         if(i > 0 && j == 0) pathCountsDp[i][j] += pathCountsDp[i-1][j];
+        //     }
+        // }
 
         return pathCountsDp[m][n];
     }
