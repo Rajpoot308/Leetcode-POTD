@@ -102,7 +102,7 @@ public:
     
     int countUniquePath(int m, int n, vector<vector<int>>& obstacleGrid) {
 
-        if(obstacleGrid[m][n] == 1 || obstacleGrid[0][0] == 1) return 0;
+        // if(obstacleGrid[m][n] == 1 || obstacleGrid[0][0] == 1) return 0;
 
         vector<int> prev(n+1, 0);
 
