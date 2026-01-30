@@ -18,7 +18,7 @@ public:
         );
 
         for (int i = 0; i < idCounter; ++i)
-            dist[i][i] = 1;
+            dist[i][i] = 0;
 
         // Direct transformations
         for (int i = 0; i < original.size(); ++i) {
