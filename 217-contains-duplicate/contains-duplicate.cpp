@@ -28,29 +28,31 @@ public:
     // }
 
 // 3. using hashset T.C. O(n) S.C. O(n)
-    bool containsDuplicate(vector<int>& nums) {
-       int n = nums.size();
-       unordered_set<int> look;
-       for(int num : nums) {
-          if(look.count(num) > 0) 
-            return true;
-
-            look.insert(num);
-       }
-
-       return false;
-    }
-
-// 4. using hash map 
     // bool containsDuplicate(vector<int>& nums) {
     //    int n = nums.size();
-    //    unordered_map<int> look;
+    //    unordered_set<int> look;
     //    for(int num : nums) {
     //       if(look.count(num) > 0) 
     //         return true;
+
+    //         look.insert(num);
     //    }
 
     //    return false;
     // }
+
+// 4. using hash map 
+    bool containsDuplicate(vector<int>& nums) {
+       int n = nums.size();
+       unordered_map<int, int> look;
+       for(int num : nums) {
+          if(look.count(num) > 0) 
+            return true;
+
+          look[num]++;
+       }
+
+       return false;
+    }
 
 };
