@@ -37,7 +37,8 @@ public:
 
         for(string& str : words) {
             samStr += str;
-            if((samStr.size() == n) && (samStr == s)) return true;
+            if(samStr.size() > n) break;
+            if(samStr == s) return true;
 
         }
 
