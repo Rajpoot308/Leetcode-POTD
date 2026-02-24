@@ -1,23 +1,27 @@
 class Solution {
 public:
 
-// 1. 
+// 1. using hashset
+    
+    int findPow(int k) {
+        int pw = 1;
+        while(k--) {
+            pw *= 2;
+        }
+        return pw;
+    }
+
     bool hasAllCodes(string s, int k) {
-         int req = 1 << k;
-        bitset<1048576> seen;
-        int mask = req - 1;
-        int hash = 0;
+        int n = s.length();
+        unordered_set<string> uset;
 
-        for (int i = 0; i < s.length(); ++i) {
-            hash = ((hash << 1) & mask) | (s[i] & 1);
-
-            if (i >= k - 1 && !seen[hash]) {
-                seen[hash] = 1;
-                req--;
-                if (req == 0) return true;
-            }
+        for(int i = 0; i < n-k+1; i++) {
+            uset.insert(s.substr(i, k));
         }
 
+        if(uset.size() == findPow(k)) {
+            return true;
+        }
         return false;
     }
 };
