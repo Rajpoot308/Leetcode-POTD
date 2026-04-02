@@ -49,28 +49,49 @@ public:
     // }
 
 // 3. iterative way T.C. O(n) S.C. O(n) and no recursive stack
-    int totalDistinctWays(int n, vector<int>& dp) {
+    // int totalDistinctWays(int n, vector<int>& dp) {
         
-        if(n > 0) dp[1] = 1;
-        if(n > 1) dp[2] = 2;
+    //     if(n > 0) dp[1] = 1;
+    //     if(n > 1) dp[2] = 2;
+
+        
+    //     for(int currStep = 3; currStep <= n; currStep++) {
+    //         int count = 0;
+    //         for(int i = 1; i < 3; i++) {
+    //             int subCount = dp[currStep - i]; 
+    //             count = count + subCount;  
+    //         }
+    //         dp[currStep] = count;
+    //     }
+        
+
+    //     return dp[n];
+    // }
+     
+    // int climbStairs(int n) {
+
+    //     vector<int> dp(n + 1, 0);
+    //     return totalDistinctWays(n, dp);
+    // }
+
+// 4. space optimization T.C. O(n) S.C. O(1) 
+     
+    int climbStairs(int n) {
+        
+        int prev2 = 1, prev1 = 2, curr = 0;
+        if(n == 0) return 0;
+        if(n == 1) return prev2;
+        if(n == 2) return prev1;
+
 
         
         for(int currStep = 3; currStep <= n; currStep++) {
-            int count = 0;
-            for(int i = 1; i < 3; i++) {
-                int subCount = dp[currStep - i]; 
-                count = count + subCount;  
-            }
-            dp[currStep] = count;
+            curr = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = curr;
         }
         
 
-        return dp[n];
-    }
-     
-    int climbStairs(int n) {
-
-        vector<int> dp(n + 1, 0);
-        return totalDistinctWays(n, dp);
+        return curr;
     }
 };
