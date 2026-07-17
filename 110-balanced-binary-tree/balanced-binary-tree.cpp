@@ -11,39 +11,28 @@
  */
 class Solution {
 public:
-    
-    int height(TreeNode *root){
-        if(root == nullptr){
-            return 0;
-        }
+    int maxDepth(TreeNode* root) {
+        if(root == nullptr) return 0;
 
-        int leftHeight = height(root->left);
-        int rightHeight = height(root->right);
+        int dLeft = maxDepth(root -> left);
+        int dRight = maxDepth(root -> right);
 
-        int ans = max(leftHeight, rightHeight) + 1;
-
+        int ans = max(dLeft, dRight) + 1;
         return ans;
     }
+
     bool isBalanced(TreeNode* root) {
-        if(root == nullptr){
-            return true;
-        }
+        if(root == nullptr) return true;
+        
+        int dLeft = maxDepth(root -> left);
+        int dRight = maxDepth(root -> right);
 
-        //one case
-        int leftHeight = height(root->left);
-        int rightHeight = height(root->right);
+        bool curr = abs(dLeft - dRight) <= 1;
 
-        int diff = abs(leftHeight - rightHeight);
+        bool left = isBalanced(root -> left);
+        bool right = isBalanced(root -> right);
 
-        bool ans1 = (diff <= 1);
+        return curr && left && right;
 
-        // recursion
-        bool left = isBalanced(root->left);
-        bool right = isBalanced(root->right);
-
-        if(left && right && ans1){
-            return true;
-        }
-        return false;
     }
 };
