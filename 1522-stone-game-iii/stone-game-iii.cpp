@@ -91,33 +91,33 @@ public:
     // }
 
 // 2.2 recursion + memoization (Top down approch)
-    int maxiScoreDiff(vector<int>& stoneValue, int i, int j, vector<int>& dp) {
-        if(i > j) return 0;
-        if(i == j) return stoneValue[i];
+    // int maxiScoreDiff(vector<int>& stoneValue, int i, int j, vector<int>& dp) {
+    //     if(i > j) return 0;
+    //     if(i == j) return stoneValue[i];
 
-        if(dp[i] != -1) return dp[i];
+    //     if(dp[i] != -1) return dp[i];
 
-        int first = stoneValue[i] - maxiScoreDiff(stoneValue, i+1, j, dp);
-        int second = stoneValue[i] + stoneValue[i+1] - maxiScoreDiff(stoneValue, i+2, j, dp);
+    //     int first = stoneValue[i] - maxiScoreDiff(stoneValue, i+1, j, dp);
+    //     int second = stoneValue[i] + stoneValue[i+1] - maxiScoreDiff(stoneValue, i+2, j, dp);
         
-        int third = -1000;
-        if(i+2 <= j) {
-            third = stoneValue[i] + stoneValue[i+1] + stoneValue[i+2] - maxiScoreDiff(stoneValue, i+3, j, dp);
-        }
+    //     int third = -1000;
+    //     if(i+2 <= j) {
+    //         third = stoneValue[i] + stoneValue[i+1] + stoneValue[i+2] - maxiScoreDiff(stoneValue, i+3, j, dp);
+    //     }
 
-        return dp[i] = max(first, max(second, third));
-    }
-    string stoneGameIII(vector<int>& stoneValue) {
-        int n  = stoneValue.size();
-        vector<int> dp(n, -1);
+    //     return dp[i] = max(first, max(second, third));
+    // }
+    // string stoneGameIII(vector<int>& stoneValue) {
+    //     int n  = stoneValue.size();
+    //     vector<int> dp(n, -1);
 
-        int scoreDiff= maxiScoreDiff(stoneValue, 0, n-1, dp);
+    //     int scoreDiff= maxiScoreDiff(stoneValue, 0, n-1, dp);
         
 
-        if(scoreDiff > 0) return "Alice";
-        if(scoreDiff == 0) return "Tie";
-        return "Bob";
-    }
+    //     if(scoreDiff > 0) return "Alice";
+    //     if(scoreDiff == 0) return "Tie";
+    //     return "Bob";
+    // }
 
 // 2.3 Bottom up approch (tabulation) T.C. O(n2) S.C. O(n2) 
 
@@ -152,5 +152,38 @@ public:
     //     if(scoreDiff == 0) return "Tie";
     //     return "Bob";
     // }
+
+// 2.4 bottom up approch T.C. O(n) S.C. O(n)
+    string stoneGameIII(vector<int>& stoneValue) {
+        int n  = stoneValue.size();
+        vector<int> dp(n, -1);
+
+        for(int i = n-1; i >= 0; i--) {
+
+               
+                    int a = i + 1 < n ? dp[i+1] : 0;
+                    int b = i + 2 < n ? dp[i+2] : 0;
+                    int c = i + 3 < n ? dp[i+3] : 0;
+
+                    int second = -1000;
+                    if(i+1 < n) {
+                        second = stoneValue[i] + stoneValue[i+1] - b;
+                    }
+
+                    int third = -1000;
+                    if(i+2 < n) {
+                        third = stoneValue[i] + stoneValue[i+1] + stoneValue[i+2] - c;
+                    }
+                    dp[i] = max(stoneValue[i] - a, max(second, third));
+                
+            
+        }
+
+        int scoreDiff = dp[0];
+
+        if(scoreDiff > 0) return "Alice";
+        if(scoreDiff == 0) return "Tie";
+        return "Bob";
+    }
 
 };
