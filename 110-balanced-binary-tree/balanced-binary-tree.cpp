@@ -11,28 +11,27 @@
  */
 class Solution {
 public:
-    int maxDepth(TreeNode* root) {
-        if(root == nullptr) return 0;
 
-        int dLeft = maxDepth(root -> left);
-        int dRight = maxDepth(root -> right);
+// 2. T.C. O(n) S.C. O(h) 
+    bool isBal = true;
+    
+    // bottom up recursion
+    int findHeightBinaryTree(TreeNode* root) {
+        // base case
+        if(!root) return 0;
 
-        int ans = max(dLeft, dRight) + 1;
-        return ans;
+        // recursion
+        int leftH = findHeightBinaryTree(root->left);
+        int rightH = findHeightBinaryTree(root->right);
+
+        if(isBal) {
+            isBal = abs(leftH - rightH) <= 1;
+        }
+
+        return max(leftH, rightH) + 1;
     }
-
     bool isBalanced(TreeNode* root) {
-        if(root == nullptr) return true;
-        
-        int dLeft = maxDepth(root -> left);
-        int dRight = maxDepth(root -> right);
-
-        bool curr = abs(dLeft - dRight) <= 1;
-
-        bool left = isBalanced(root -> left);
-        bool right = isBalanced(root -> right);
-
-        return curr && left && right;
-
+        findHeightBinaryTree(root);
+        return isBal;
     }
 };
